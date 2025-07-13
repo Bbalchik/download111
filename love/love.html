@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>I Love You 💖</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: linear-gradient(to bottom, #ffe6f0, #ffcce2);
+      font-family: 'Segoe UI', sans-serif;
+      overflow-x: hidden;
+      min-height: 100vh;
+      color: #ff3385;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 2.5rem;
+      margin-top: 30px;
+      text-shadow: 0 0 10px #fff;
+    }
+
+    .typing {
+      text-align: center;
+      margin-top: 15px;
+      font-size: 1.3rem;
+      color: #ff66a3;
+      animation: typing 5s steps(40, end) infinite;
+      white-space: nowrap;
+      overflow: hidden;
+      border-right: 2px solid #ff66a3;
+      width: 0;
+    }
+
+    @keyframes typing {
+      0% { width: 0; }
+      50% { width: 40ch; }
+      100% { width: 0; }
+    }
+
+    .gallery {
+      max-width: 90%;
+      margin: 50px auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 15px;
+    }
+
+    .photo-card {
+      background: white;
+      border-radius: 15px;
+      box-shadow: 0 4px 10px rgba(255, 105, 180, 0.3);
+      overflow: hidden;
+      text-align: center;
+      animation: fadeIn 1s ease forwards;
+      transform: scale(0.95);
+      transition: transform 0.3s ease;
+    }
+
+    .photo-card:hover {
+      transform: scale(1.05);
+    }
+
+    .photo-card img {
+      width: 100%;
+      height: 150px;
+      object-fit: cover;
+      animation: zoomIn 1s ease;
+    }
+
+    .photo-card p {
+      padding: 10px;
+      color: #ff3399;
+      font-weight: bold;
+      font-size: 1rem;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px) scale(0.95); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    @keyframes zoomIn {
+      from { transform: scale(1.2); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    .btn-love {
+      display: block;
+      margin: 30px auto 10px;
+      background: #ff66a3;
+      color: white;
+      border: none;
+      padding: 12px 25px;
+      font-size: 1.2rem;
+      border-radius: 30px;
+      box-shadow: 0 0 10px #ffb3d9;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
+
+    .btn-love:hover {
+      transform: scale(1.05);
+    }
+
+    audio { display: none; }
+
+    .music-btn {
+      position: fixed;
+      bottom: 15px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #ff80bf;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 30px;
+      font-size: 1rem;
+      border: none;
+      box-shadow: 0 0 10px #ffb3d9;
+      z-index: 1000;
+    }
+
+    .petal {
+      position: fixed;
+      top: -10px;
+      width: 20px;
+      height: 20px;
+      background: pink;
+      border-radius: 50%;
+      opacity: 0.7;
+      animation: fall 8s linear infinite;
+    }
+
+    @keyframes fall {
+      0% { transform: translateY(0) rotate(0deg); }
+      100% { transform: translateY(100vh) rotate(360deg); }
+    }
+
+    .heart-grid {
+      display: grid;
+      grid-template-columns: repeat(13, 1fr);
+      gap: 5px;
+      justify-content: center;
+      margin: 20px auto;
+      max-width: 400px;
+      transform: scale(1);
+    }
+
+    .heart-cell {
+      width: 30px;
+      height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      opacity: 0;
+    }
+
+    .heart-cell.show {
+      animation: popIn 0.4s forwards;
+    }
+
+    .hidden { display: none; }
+
+    @keyframes popIn {
+      0% { transform: scale(0.5); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    @media (max-width: 500px) {
+      h1 { font-size: 2rem; }
+      .typing { font-size: 1.1rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>I love you more and more each day... 💞</h1>
+  <div class="typing">You're the most precious thing in my life 💗 I love you endlessly...</div>
+
+  <button class="btn-love" onclick="showLove()">Я тебе люблю ❤️</button>
+
+  <div id="love-message" class="heart-grid hidden"></div>
+
+  <div class="gallery">
+    <div class="photo-card"><img src="1.jpg" alt=""><p>I love you so much ❤️</p></div>
+    <div class="photo-card"><img src="2.jpg" alt=""><p>I love you so much ❤️</p></div>
+    <div class="photo-card"><img src="3.jpg" alt=""><p>I love you so much ❤️</p></div>
+    <div class="photo-card"><img src="4.jpg" alt=""><p>I love you so much ❤️</p></div>
+    <div class="photo-card"><img src="5.jpg" alt=""><p>I love you so much ❤️</p></div>
+    <div class="photo-card"><img src="6.jpg" alt=""><p>I love you so much ❤️</p></div>
+    <div class="photo-card"><img src="7.jpg" alt=""><p>I love you so much ❤️</p></div>
+    <div class="photo-card"><img src="8.jpg" alt=""><p>I love you so much ❤️</p></div>
+    <div class="photo-card"><img src="9.jpg" alt=""><p>I love you so much ❤️</p></div>
+    <div class="photo-card"><img src="10.jpg" alt=""><p>I love you so much ❤️</p></div>
+  </div>
+
+  <!-- Музика -->
+  <audio id="bgMusic" loop>
+    <source src="music.mp3" type="audio/mpeg">
+    Your browser does not support the audio tag.
+  </audio>
+  <button class="music-btn" onclick="toggleMusic()">🎵 Play Music</button>
+
+  <script>
+    function createPetal() {
+      const petal = document.createElement("div");
+      petal.classList.add("petal");
+      petal.style.left = Math.random() * 100 + "vw";
+      petal.style.animationDuration = 5 + Math.random() * 5 + "s";
+      petal.style.opacity = Math.random() + 0.3;
+      document.body.appendChild(petal);
+      setTimeout(() => petal.remove(), 10000);
+    }
+
+    setInterval(createPetal, 300);
+
+    const heartShape = [
+      "0000100010000",
+      "0001110111000",
+      "0011111111100",
+      "0111111111110",
+      "0111111111110",
+      "0011111111100",
+      "0001111111000",
+      "0000111110000",
+      "0000011100000",
+      "0000001000000"
+    ];
+
+    function showLove() {
+      const grid = document.getElementById("love-message");
+      grid.classList.remove("hidden");
+      grid.innerHTML = "";
+
+      let delay = 0;
+      heartShape.forEach(row => {
+        [...row].forEach(cell => {
+          const div = document.createElement("div");
+          div.classList.add("heart-cell");
+          if (cell === "1") {
+            div.textContent = "❤️";
+            setTimeout(() => {
+              div.classList.add("show");
+            }, delay);
+            delay += 40;
+          }
+          grid.appendChild(div);
+        });
+      });
+    }
+
+    const music = document.getElementById("bgMusic");
+    const musicBtn = document.querySelector(".music-btn");
+    let playing = false;
+
+    function toggleMusic() {
+      if (playing) {
+        music.pause();
+        musicBtn.textContent = "🎵 Play Music";
+      } else {
+        music.play();
+        musicBtn.textContent = "⏸ Pause Music";
+      }
+      playing = !playing;
+    }
+  </script>
+</body>
+</html>
