@@ -45,8 +45,6 @@
       box-shadow: 0 4px 10px rgba(255, 105, 180, 0.3);
       overflow: hidden;
       text-align: center;
-      animation: fadeIn 1s ease forwards;
-      transform: scale(0.95);
       transition: transform 0.3s ease;
     }
 
@@ -58,29 +56,18 @@
       width: 100%;
       height: 150px;
       object-fit: cover;
-      animation: zoomIn 1s ease;
     }
 
     .photo-card p {
       padding: 10px;
-      color: #ff3399;
+      color: #ff0033;
       font-weight: bold;
       font-size: 1rem;
     }
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px) scale(0.95); }
-      to { opacity: 1; transform: translateY(0) scale(1); }
-    }
-
-    @keyframes zoomIn {
-      from { transform: scale(1.2); opacity: 0; }
-      to { transform: scale(1); opacity: 1; }
-    }
-
-    .btn-love {
+    .btn-love, .btn-hug {
       display: block;
-      margin: 30px auto 10px;
+      margin: 20px auto;
       background: #ff66a3;
       color: white;
       border: none;
@@ -92,7 +79,7 @@
       transition: transform 0.2s ease;
     }
 
-    .btn-love:hover {
+    .btn-love:hover, .btn-hug:hover {
       transform: scale(1.07);
     }
 
@@ -119,7 +106,6 @@
       justify-content: center;
       margin: 20px auto;
       max-width: 400px;
-      transform: scale(1);
     }
 
     .heart-cell {
@@ -130,9 +116,6 @@
       justify-content: center;
       font-size: 22px;
       opacity: 0;
-    }
-
-    .heart-cell.show {
       animation: popIn 0.4s forwards;
     }
 
@@ -141,22 +124,47 @@
       100% { transform: scale(1); opacity: 1; }
     }
 
-    .hidden { display: none; }
-
-    /* Зірки */
-    .star {
+    .star, .petal {
       position: absolute;
+      border-radius: 50%;
+      z-index: 0;
+    }
+
+    .star {
       width: 2px;
       height: 2px;
       background: white;
-      border-radius: 50%;
-      opacity: 0.8;
       animation: twinkle 2s infinite alternate;
     }
 
     @keyframes twinkle {
       from { opacity: 0.3; }
       to { opacity: 1; }
+    }
+
+    .petal {
+      width: 15px;
+      height: 15px;
+      background: pink;
+      animation: fall 8s linear infinite;
+      opacity: 0.6;
+    }
+
+    @keyframes fall {
+      0% { transform: translateY(0) rotate(0); }
+      100% { transform: translateY(100vh) rotate(360deg); }
+    }
+
+    .hug-heart {
+      position: absolute;
+      font-size: 2rem;
+      animation: floatUp 2s ease-out forwards;
+      pointer-events: none;
+    }
+
+    @keyframes floatUp {
+      0% { opacity: 1; transform: translateY(0) scale(1); }
+      100% { opacity: 0; transform: translateY(-150px) scale(1.5); }
     }
 
     @media (max-width: 500px) {
@@ -171,10 +179,21 @@
   <div class="typing" id="typing-text"></div>
 
   <button class="btn-love" onclick="showLove()">Я тебе кохаю ❤️</button>
+  <button class="btn-hug" onclick="hug()">Обійняти тебе 🤗</button>
+
   <div id="love-message" class="heart-grid hidden"></div>
 
   <div class="gallery">
-    <!-- Твої фото-картки без змін -->
+    <div class="photo-card"><img src="1.jpg"><p>Люблю тебе дуже сильно ❤️</p></div>
+    <div class="photo-card"><img src="2.jpg"><p>Люблю тебе дуже сильно ❤️</p></div>
+    <div class="photo-card"><img src="3.jpg"><p>Люблю тебе дуже сильно ❤️</p></div>
+    <div class="photo-card"><img src="4.jpg"><p>Люблю тебе дуже сильно ❤️</p></div>
+    <div class="photo-card"><img src="5.jpg"><p>Люблю тебе дуже сильно ❤️</p></div>
+    <div class="photo-card"><img src="6.jpg"><p>Люблю тебе дуже сильно ❤️</p></div>
+    <div class="photo-card"><img src="7.jpg"><p>Люблю тебе дуже сильно ❤️</p></div>
+    <div class="photo-card"><img src="8.jpg"><p>Люблю тебе дуже сильно ❤️</p></div>
+    <div class="photo-card"><img src="9.jpg"><p>Люблю тебе дуже сильно ❤️</p></div>
+    <div class="photo-card"><img src="10.jpg"><p>Люблю тебе дуже сильно ❤️</p></div>
   </div>
 
   <audio id="bgMusic" loop>
@@ -183,11 +202,9 @@
   <button class="music-btn" onclick="toggleMusic()">🎵 Увімкнути музику</button>
 
   <script>
-    // Друкування з ефектом
     const text = "Ти — найважливіше в моєму житті 💗 Моє серце належить лише тобі...";
     const typingEl = document.getElementById("typing-text");
     let i = 0;
-
     function typeText() {
       if (i < text.length) {
         typingEl.innerHTML += text.charAt(i);
@@ -201,10 +218,8 @@
         }, 4000);
       }
     }
-
     typeText();
 
-    // Серденько
     const heartShape = [
       "0000100010000",
       "0001110111000",
@@ -217,12 +232,10 @@
       "0000011100000",
       "0000001000000"
     ];
-
     function showLove() {
       const grid = document.getElementById("love-message");
       grid.classList.remove("hidden");
       grid.innerHTML = "";
-
       let delay = 0;
       heartShape.forEach(row => {
         [...row].forEach(cell => {
@@ -230,9 +243,7 @@
           div.classList.add("heart-cell");
           if (cell === "1") {
             div.textContent = "❤️";
-            setTimeout(() => {
-              div.classList.add("show");
-            }, delay);
+            setTimeout(() => div.style.opacity = 1, delay);
             delay += 40;
           }
           grid.appendChild(div);
@@ -243,7 +254,6 @@
     const music = document.getElementById("bgMusic");
     const musicBtn = document.querySelector(".music-btn");
     let playing = false;
-
     function toggleMusic() {
       if (playing) {
         music.pause();
@@ -263,6 +273,27 @@
       star.style.left = `${Math.random() * 100}vw`;
       star.style.animationDuration = `${1 + Math.random() * 2}s`;
       document.body.appendChild(star);
+    }
+
+    // Пелюстки
+    setInterval(() => {
+      const petal = document.createElement("div");
+      petal.classList.add("petal");
+      petal.style.left = `${Math.random() * 100}vw`;
+      petal.style.animationDuration = `${5 + Math.random() * 5}s`;
+      document.body.appendChild(petal);
+      setTimeout(() => petal.remove(), 10000);
+    }, 300);
+
+    // Обійми
+    function hug() {
+      const heart = document.createElement("div");
+      heart.textContent = "🫂";
+      heart.className = "hug-heart";
+      heart.style.left = `${50 + (Math.random() * 40 - 20)}vw`;
+      heart.style.top = "80vh";
+      document.body.appendChild(heart);
+      setTimeout(() => heart.remove(), 2000);
     }
   </script>
 </body>
