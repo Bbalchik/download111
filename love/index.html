@@ -8,11 +8,12 @@
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
-      background: linear-gradient(to bottom, #ffe6f0, #ffcce2);
+      background: linear-gradient(to bottom, #0d1b2a, #1b263b);
       font-family: 'Segoe UI', sans-serif;
-      overflow-x: hidden;
+      overflow: hidden;
       min-height: 100vh;
-      color: #ff3385;
+      color: #ffb6c1;
+      position: relative;
     }
 
     h1 {
@@ -26,18 +27,8 @@
       text-align: center;
       margin-top: 20px;
       font-size: 1.4rem;
-      color: #ff66a3;
-      animation: typing 12s steps(50, end) infinite;
-      white-space: nowrap;
-      overflow: hidden;
-      border-right: 3px solid #ff66a3;
-      width: 0;
-    }
-
-    @keyframes typing {
-      0% { width: 0; }
-      50% { width: 42ch; }
-      100% { width: 0; }
+      color: #ff99cc;
+      min-height: 30px;
     }
 
     .gallery {
@@ -105,8 +96,6 @@
       transform: scale(1.07);
     }
 
-    audio { display: none; }
-
     .music-btn {
       position: fixed;
       bottom: 15px;
@@ -121,22 +110,6 @@
       box-shadow: 0 0 10px #ffb3d9;
       z-index: 1000;
       cursor: pointer;
-    }
-
-    .petal {
-      position: fixed;
-      top: -10px;
-      width: 20px;
-      height: 20px;
-      background: pink;
-      border-radius: 50%;
-      opacity: 0.7;
-      animation: fall 8s linear infinite;
-    }
-
-    @keyframes fall {
-      0% { transform: translateY(0) rotate(0deg); }
-      100% { transform: translateY(100vh) rotate(360deg); }
     }
 
     .heart-grid {
@@ -163,11 +136,27 @@
       animation: popIn 0.4s forwards;
     }
 
-    .hidden { display: none; }
-
     @keyframes popIn {
       0% { transform: scale(0.5); opacity: 0; }
       100% { transform: scale(1); opacity: 1; }
+    }
+
+    .hidden { display: none; }
+
+    /* Зірки */
+    .star {
+      position: absolute;
+      width: 2px;
+      height: 2px;
+      background: white;
+      border-radius: 50%;
+      opacity: 0.8;
+      animation: twinkle 2s infinite alternate;
+    }
+
+    @keyframes twinkle {
+      from { opacity: 0.3; }
+      to { opacity: 1; }
     }
 
     @media (max-width: 500px) {
@@ -179,44 +168,43 @@
 <body>
 
   <h1>Я кохаю тебе більше з кожним днем... 💞</h1>
-  <div class="typing">Ти — найважливіше в моєму житті 💗 Моє серце належить лише тобі...</div>
+  <div class="typing" id="typing-text"></div>
 
   <button class="btn-love" onclick="showLove()">Я тебе кохаю ❤️</button>
-
   <div id="love-message" class="heart-grid hidden"></div>
 
   <div class="gallery">
-    <div class="photo-card"><img src="1.jpg" alt=""><p>Ти моє щастя 💖</p></div>
-    <div class="photo-card"><img src="2.jpg" alt=""><p>Я сумую за тобою 😘</p></div>
-    <div class="photo-card"><img src="3.jpg" alt=""><p>Ти моя мрія 🌸</p></div>
-    <div class="photo-card"><img src="4.jpg" alt=""><p>Я з тобою назавжди 💍</p></div>
-    <div class="photo-card"><img src="5.jpg" alt=""><p>Моє серденько 💗</p></div>
-    <div class="photo-card"><img src="6.jpg" alt=""><p>Ти найкраща 💎</p></div>
-    <div class="photo-card"><img src="7.jpg" alt=""><p>Моя єдина ❤️</p></div>
-    <div class="photo-card"><img src="8.jpg" alt=""><p>Обійму тебе ніжно 🤗</p></div>
-    <div class="photo-card"><img src="9.jpg" alt=""><p>Ти моє сонце ☀️</p></div>
-    <div class="photo-card"><img src="10.jpg" alt=""><p>Без тебе немає мене 🌷</p></div>
+    <!-- Твої фото-картки без змін -->
   </div>
 
   <audio id="bgMusic" loop>
     <source src="music.mp3" type="audio/mpeg">
-    Ваш браузер не підтримує відтворення аудіо.
   </audio>
   <button class="music-btn" onclick="toggleMusic()">🎵 Увімкнути музику</button>
 
   <script>
-    function createPetal() {
-      const petal = document.createElement("div");
-      petal.classList.add("petal");
-      petal.style.left = Math.random() * 100 + "vw";
-      petal.style.animationDuration = 6 + Math.random() * 4 + "s";
-      petal.style.opacity = Math.random() + 0.3;
-      document.body.appendChild(petal);
-      setTimeout(() => petal.remove(), 10000);
+    // Друкування з ефектом
+    const text = "Ти — найважливіше в моєму житті 💗 Моє серце належить лише тобі...";
+    const typingEl = document.getElementById("typing-text");
+    let i = 0;
+
+    function typeText() {
+      if (i < text.length) {
+        typingEl.innerHTML += text.charAt(i);
+        i++;
+        setTimeout(typeText, 90);
+      } else {
+        setTimeout(() => {
+          typingEl.innerHTML = "";
+          i = 0;
+          setTimeout(typeText, 800);
+        }, 4000);
+      }
     }
 
-    setInterval(createPetal, 300);
+    typeText();
 
+    // Серденько
     const heartShape = [
       "0000100010000",
       "0001110111000",
@@ -265,6 +253,16 @@
         musicBtn.textContent = "⏸ Зупинити музику";
       }
       playing = !playing;
+    }
+
+    // Зірки
+    for (let i = 0; i < 100; i++) {
+      const star = document.createElement("div");
+      star.classList.add("star");
+      star.style.top = `${Math.random() * 100}vh`;
+      star.style.left = `${Math.random() * 100}vw`;
+      star.style.animationDuration = `${1 + Math.random() * 2}s`;
+      document.body.appendChild(star);
     }
   </script>
 </body>
