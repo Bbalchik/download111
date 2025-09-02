@@ -42,6 +42,7 @@
     box-shadow: 0 15px 30px rgba(0,0,0,0.3);
     transition: transform 0.3s ease;
     z-index: 1;
+    margin-bottom: 15px;
   }
 
   .video-container:hover {
@@ -52,6 +53,25 @@
     width: 100%;
     height: 300px;
     border: none;
+  }
+
+  input, button {
+    padding: 10px 15px;
+    font-size: 16px;
+    border-radius: 10px;
+    border: none;
+    margin: 5px;
+  }
+
+  button {
+    background: #e91e63;
+    color: white;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+
+  button:hover {
+    background: #c2185b;
   }
 
   /* Сердечки */
@@ -69,25 +89,14 @@
     100% {transform: translateY(100vh) scale(1);}
   }
 
-  /* Адаптивність */
   @media (max-width: 480px) {
-    h1 {
-      font-size: 28px;
-    }
-
-    iframe {
-      height: 220px;
-    }
+    h1 { font-size: 28px; }
+    iframe { height: 220px; }
   }
 
   @media (max-width: 320px) {
-    h1 {
-      font-size: 24px;
-    }
-
-    iframe {
-      height: 180px;
-    }
+    h1 { font-size: 24px; }
+    iframe { height: 180px; }
   }
 </style>
 </head>
@@ -95,12 +104,39 @@
   <h1>Люблю тебе ❤️</h1>
 
   <div class="video-container">
-    <iframe src="https://www.youtube.com/embed/tgbNymZ7vqY" 
-      title="YouTube video" allowfullscreen>
-    </iframe>
+    <iframe id="videoFrame" src="https://www.youtube.com/embed/tgbNymZ7vqY" 
+      title="YouTube video" allowfullscreen></iframe>
+  </div>
+
+  <div>
+    <input type="text" id="videoLink" placeholder="Встав посилання на YouTube">
+    <button onclick="loadVideo()">Дивитися</button>
   </div>
 
 <script>
+  // Функція для заміни відео
+  function loadVideo() {
+    const link = document.getElementById('videoLink').value;
+    if (!link) return;
+
+    // Перетворюємо повне посилання на embed
+    let videoId = '';
+    if(link.includes('watch?v=')) {
+      videoId = link.split('watch?v=')[1];
+      const ampersand = videoId.indexOf('&');
+      if(ampersand !== -1) videoId = videoId.substring(0, ampersand);
+    } else if(link.includes('youtu.be/')) {
+      videoId = link.split('youtu.be/')[1];
+    } else {
+      alert('Невірне посилання на YouTube');
+      return;
+    }
+
+    const embedLink = 'https://www.youtube.com/embed/' + videoId;
+    document.getElementById('videoFrame').src = embedLink;
+  }
+
+  // Сердечки
   function createHeart() {
     const heart = document.createElement('div');
     heart.className = 'heart';
@@ -114,6 +150,3 @@
 </script>
 </body>
 </html>
-
-
-
